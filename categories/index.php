@@ -1,8 +1,8 @@
 <?php
 require 'model/myfunctions.php';
 
-$categories=get_categories();
-$products=get_products();
+$categories=get_dogs();
+$products=get_price();
 
 include 'view/list.php';
 ?>
