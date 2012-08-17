@@ -26,6 +26,15 @@ for($i=0;$i<count($tmp0);$i++){
 	echo '<li>'.$tmp0[$i]."  $".$tmp1[$i].'</li>';
 }
 
+//foreach($details as $category){
+//	foreach($category as $name=>$value){
+//	echo '<li>'.$name." - ".$value."</li>";}
+//}
+
+foreach($details as $category){
+	echo '<li>'.$category['Species']." - ".$category['Name']." - $".$category['Cash'].'</li>';
+}
+
 echo '</ul>';
 ?>
 </h1>

@@ -35,6 +35,11 @@ function get_price(){
 	return $db->query($query);
 }
 
+function get_dogstuff(){
+	global $db;// this asserts that $db is global (from database.php) not a local variable
+	$query='select * from dogs';
+	return $db->query($query);	
+}
 
 
 ?>
