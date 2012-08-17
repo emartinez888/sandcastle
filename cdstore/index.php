@@ -28,13 +28,15 @@
 		<input type="text" name="cdname"/>
 		<input type="submit" name="add" value="Add to list" />
 		<br/>
+		
 		<label for="cdnumber">Delete a DC:</label><br />
 		<select name="cdnumber">
 			<?php echo $cdNums; ?>
 		</select>
 		<input type="submit" name="delete" value="Delete CD from list" /><br/>
+		
 		<label for="cdedit">Edit a CD name:</label><br />
-		<select name="cdnumber">
+		<select name="cdnumber2">
 			<?php echo $cdNums; ?>
 		</select>
 		<input type="text" name="cdedit"/>
