@@ -48,7 +48,8 @@ INSERT INTO `cds` (`id`, `name`) VALUES
 (1007, 'Various artists Dirty Dancing'),
 (1008, 'Bee Gees / Various artists Saturday Night Fever'),
 (1009, 'Fleetwood Mac Rumours'),
-(1010, 'Shania Twain Come On Over');
+(1010, 'Shania Twain Come On Over')
+(1011, 'Shania Twin Come On Over Again');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
