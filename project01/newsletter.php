@@ -1,29 +1,48 @@
 <?php
-$bTest=true;
+$message='';
 if(isset($_POST['submit'])){
 	// user wants to save info in database
 	// don't save any data, just send email response
 	// must validate all valid fields, hackers could change the data info
-	if(!(strlen(trim($_POST['name_first']))>0 && strlen(trim($_POST['name_last'])) && strlen(trim($_POST['dob'])))>0{
-		$bTest=$bTest && false
-	}
+	$bTest=true;
 	
+	$bTest=$bTest && (strlen(trim($_POST['name_first']))>0 && strlen(trim($_POST['name_last']))>0 && strlen(trim($_POST['dob']))>0);
+
 	$res=$_POST['dob'];
 	$res=explode('-',$res);
 	// checkdate format is mm dd yyyy
 	$bTest=$bTest && checkdate($res[1],$res[2],$res[0]);
-	
+
 	$res=filter_var($_POST['email'], FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i")) );
 	$bTest=$bTest && (strlen($res)>0);
-	
+
 	if($bTest){
 		// all good, send email
+		$message='Hello '.$_POST['name_first'].' '.$_POST['name_last'].'\n';
+		$message.='You have just joined the save a pig campain by requesting two jugs of swine.\n';
+		$message.='You will receive once a year on '.$_POST['dob'].' for the rest of your life these jugs.\n';
+		$message.='Congrats and thanks again.\nThe management\n';
+		mail($_POST['email'],'Swine jugs request',$message,'From: hello@eddy.x10.mx');
+		$message='email sent.';
 	}
 	else{
-		
+		$message='SOME WRONG ENTRIES';
 	}
 }
-
+$t='';
+$aDs=array("","S","M","T","W","T","F","S");
+for($i=1;$i<8;$i++){
+	$t.='<tr>';
+	for($j=1;$j<8;$j++){
+		if($i==1){
+			$t.='<th>'.$aDs[j].'</th>';
+		}
+		else{
+			$t.='<td></td>';
+		}	
+	}
+	$t.='</tr>';
+}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -106,76 +125,16 @@ if(isset($_POST['submit'])){
 						<input type="button" id="right" name="right" value="&gt;" />
 						<p id="month"></p>
 						<table id="cal_table">
-							<tr>
-								<th>S</th>
-								<th>M</th>
-								<th>T</th>
-								<th>W</th>
-								<th>T</th>
-								<th>F</th>
-								<th>S</th>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+							<?php echo $t; ?>
 						</table>
 						
 					</div>
-					<input id="send_info" type="submit" value="submit" />
+					<input id="send_info" type="submit" value="submit" name="submit" />
 					<input id="reset_info" type="reset" value="Reset Form" />
 				</form>
-				
+				<div>
+					<h2><?php echo $message ?></h2>
+				</div>
 			</div> <!-- main -->
 			
 			<div id="footer">

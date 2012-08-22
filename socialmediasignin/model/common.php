@@ -15,6 +15,9 @@ define('ACCESS_TOKEN_ENDPOINT', 'https://accounts.google.com/o/oauth2/token');
  *             postvals - post values
  **************************************************************************/
 function run_curl($url, $method = 'GET', $postvals = null){
+	$response=file_get_contents($url);
+	return response;
+	
     $ch = curl_init($url);
     
     //GET request: send headers and return data transfer
