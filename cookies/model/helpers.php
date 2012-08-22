@@ -8,19 +8,32 @@ function addCookie($sUser){
 }
 
 function addUser($aPost){
-	if($aPost['newpassword']==$aPost['repassword']){
+	$oUser = Users::find_by_username($aPost['username']);
+	if($oUser){
+		$sErr="User Name already taken";
+	}
+	elseif($aPost['newpassword']!=$aPost['repassword']){
+		$sErr="Passwords do not match!";
+	}
+	elseif($aPost['newpassword']==$aPost['repassword']){
 		$oUser=new Users;
-		$oUser->password=$aPost['newpassword'];
+		$oUser->password=sha1($aPost['username'].$aPost['newpassword']);
 		$oUser->username=$aPost['username'];
 		$oUser->save();
 		return true;
+	}
+	if(isset($sErr)){
+		echo $sErr;
 	}
 	return false;
 }
 
 
-function validateUser($aPost){
-	if($aPost['password']=='pa55word'){
+function validateUser($aPost,$sPsswd){
+	$oUser = Users::find_by_username($aPost['username']);
+	// $oUser is an object of User not a string
+	// if($oUser && ...) will check the first test and abour without checking the second one and won't crash!
+	if($oUser && sha1($aPost['username'].$aPost[$sPsswd])==$oUser->password){
 		return true;
 	}
 	return false;

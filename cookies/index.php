@@ -1,7 +1,14 @@
 
 <?php
 
+$res=filter_var('emar/666@gmail.com', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i")) );
+echo strlen($res);
 
+$res='6-22-1966';
+$res=explode('-',$res);
+if(checkdate($res[0],$res[1],$res[2])){
+	echo 'Good date ';
+}
 
 if(!isset($_SERVER['HTTPS'])){
 	// make sure the page uses a secure connection
@@ -45,16 +52,18 @@ if(array_key_exists('signup', $_POST)){
 elseif(array_key_exists('submit', $_POST)){
 	// from myform.php
 	// isset($_POST['submit'])
-	// validate password in here!!!
-	if(validateUser($_POST)){
+	// validate password in here!!! does not store the password
+	// sets the cookie
+	if(validateUser($_POST,'password')){
 		addCookie($_POST['username']);
 	}
 	else{
-		echo 'Your password was: '.$_POST['password'];
+		echo 'Errata Umanum Est: Your password was: '.$_POST['password'];
 	}
 
 }
-elseif(array_key_exists('save', $_POST)){
+
+if(array_key_exists('save', $_POST)){
 	// coming from creating a new account
 	if(addUser($_POST)){
 		echo '<div><h2>New account created</h2></div>';
@@ -66,7 +75,12 @@ elseif(array_key_exists('save', $_POST)){
 }
 elseif(array_key_exists('login', $_POST)){
 	// coming from creating a new account
-
+	if(validateUser($_POST,'newpassword')){
+		addCookie($_POST['username']);
+	}
+	else{
+		echo 'Errata Umanum Est: Your password was: '.$_POST['password'];
+	}
 }
 
 if(array_key_exists('username', $_COOKIE)){
