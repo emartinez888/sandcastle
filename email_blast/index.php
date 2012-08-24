@@ -20,17 +20,30 @@ ActiveRecord\Config::initialize(function($cfg)
 $action=(array_key_exists('action',$_POST)?$_POST['action']:'');
 $action=(array_key_exists('action',$_GET)?$_GET['action']:$action);
 
+
 if($action=='Subscribe'){
 	$oEmail=new Email;
 	$oEmail->email=$_POST['email'];
 	$oEmail->Save();
+	}elseif($action=='Delete'){
+		$oEmail=Email::find_by_email($_GET['email']);
+		if(isset($oEmail)){
+			$oEmail->delete();
+			echo "1 email deleted";
+		}else{
+			echo "No Email Deleted.";
+		}
 }elseif($action=='Unsuscribe'){
 	$oEmail=Email::find_by_email($_GET['email']);
 	if(isset($oEmail)){
 		$oEmail->delete();
 		echo "You have been unsubscribed";
-		exit();
+		//exit();
 	}
+	else{
+		echo "Unsubscription Failed.";
+	}
+	exit();
 }
 
 
