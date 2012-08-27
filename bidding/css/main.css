@@ -1,0 +1,68 @@
+@CHARSET "ISO-8859-1";
+
+/* 
+	Author: Eduardo Martinez
+	Created on: 2012-03-07
+	Revised on: 2012-03-22
+	CSS Version: 2.1
+	
+	Purpose: Sets formatting for index.html
+	
+	Related Files: ../images/top_curtain_II.png, ../images/long_curtain.png
+*/
+
+
+/* initialize to zero all BLOCKS default values */
+body, div, h1, h2, h3, h4, h5, h6,p,ul,ol,li,dl,dt,dd,img,form,fieldset,blockquote {
+ margin: 0;
+ padding: 0;
+ border: 0;
+}
+
+body{
+	margin: 0 auto;
+	width: 960px;	
+}
+
+#intro, #main, #signin{
+	border: 2px solid red;
+}
+
+#signin, #intro h1{
+	text-align:center;
+}
+
+#intro img{
+	vertical-align: bottom;
+}
+
+#intro p{
+	display:inline;
+}
+
+#main{
+	text-align:center;
+}
+
+#main li{
+	list-style-type:none;
+}
+
+#main img{
+	border: 1px solid black;
+}
+
+#main input[type="text"]{
+	width: 50px;
+}
+
+.adjthumb{
+	display:inline-block;
+	padding: 10px 0;
+	width:200px;
+	text-align:center;
+}
+
+.bold{
+	font-weight:bold;	
+}
