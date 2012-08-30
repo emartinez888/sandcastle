@@ -24,6 +24,7 @@ if($signin){
 	$t.='<div><p id="errmsg"></p></div>';
 }elseif($editAcct){
 	// these fields must be populated with $USERID db data
+	echo $USERID.' *** ';
 	$arr=get_user_loginfo($USERID);
 
 	$t='<div class="ralign2">';

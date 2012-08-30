@@ -7,7 +7,7 @@ $NAMEBENE='Tracy Q.';// beneficiary
 $USERID=null;// user id to fetch data in items.php, unique name as string
 $signin=$createAcct=$editAcct=false;
 // locals to this file
-$ok=$errmsg=$userslist='';
+$ok=$errmsg=$userslist=$confirmemail='';
 
 // check for user action from beginning
 // options are sign in or create new account
@@ -22,6 +22,8 @@ if(isset($_POST['action'])){
 		$userslist=get_users_list($USERID);
 	}elseif($_POST['action']=='Edit Account'){
 		$editAcct=true;
+		// set $USERID with cookie value
+		$USERID=getCookie('userid');
 		// prepare the list fromdb
 		$userslist=get_users_list($USERID);		
 	}
@@ -35,31 +37,33 @@ elseif(isset($_POST['verify'])){
 		$errmsg=verify_new_account($_POST);
 		if($errmsg==null){
 			// no errors
-			send_account_email($_POST);
+			$confirmemail=send_account_email($_POST);
 			$ok='Check your email for account confirmation';
 		}
-	}elseif($_POST['verify']=='Sign In' || $_POST['verify']=='Update Account'){
+	}elseif($_POST['verify']=='Sign In'){
 		// verify user id and email vs database
 		$errmsg=verify_account($_POST);
 		$USERID=$errmsg[1];// sets our global user
 		$errmsg=$errmsg[0];
 		if($errmsg==null){
-			if($_POST['verify']=='Sign In'){
-				// set items page with this user login info
-				addCookie($USERID);
-				$errmsg=reset_items_page();
-				if($errmsg==null){
-					$ok='Welcome '.$_POST['usersignin'].'. You are logged in.';
-				}
-			}else{
-				// update database with new info from $_POST
-				$errmsg=update_account($_POST);
-				if($errmsg==null){
-					$ok='Welcome '.$_POST['usersignin'].'. You are logged in.';
-				}				
-				// if user id was edited, just refresh this id in items page.
+			// set items page with this user login info
+			$errmsg=reset_items_page();
+			if($errmsg==null){
+				addCookie($_POST['usersignin']);
+				$USERID=getCookie('userid');
+				
+				$ok='Welcome '.$_POST['usersignin'].'. You are logged in.';
 			}
-					
+		}
+	}elseif($_POST['verify']=='Update Account'){
+		// update database with new info from $_POST
+		// must get user id from cookie since we're coming directly from the street!
+		$USERID=getCookie('userid');
+		$errmsg=update_account($_POST);
+		if($errmsg==null){
+			addCookie($_POST['usersignin']);
+			$USERID=getCookie('userid');
+			$ok='Welcome '.$_POST['usersignin'].'. You are logged in.';
 		}
 	}
 }
@@ -78,7 +82,7 @@ elseif(isset($_GET['action'])){
 
 else{
 	// we are for the first time in the site, set the cookie
-	setcookie('username','silentauction');// sets the cookie header file in the client pc
+	setcookie('userid','silentauction');// sets the cookie header file in the client pc
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -126,6 +130,8 @@ else{
 		<?php include 'views/signin.php'; ?>
 		<div><p><?php echo $ok; ?></p></div>
 		<div><p id="error"><?php echo $errmsg; ?></p></div>
+		<!--  The following is just a pretend email until watson works properly -->
+		<?php echo $confirmemail;?>
 	</div>	
 	<div id="main">
 		<?php include 'views/items.php'; ?>

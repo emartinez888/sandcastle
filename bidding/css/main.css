@@ -25,7 +25,7 @@ body{
 	width: 960px;	
 }
 
-#intro, #main, #signin{
+#intro, #main, #signin,#email{
 	border: 2px solid red;
 	border-radius:50px;
 	margin-top:10px;
@@ -47,6 +47,11 @@ body{
 
 #main{
 	text-align:center;
+
+}
+
+#main ul{
+		vertical-align:top;
 }
 
 #main li{
