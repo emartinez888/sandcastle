@@ -103,3 +103,65 @@ body{
 	padding:3px;
 }
 
+@media screen and (min-width: 960px) {
+	body{
+	margin: 0 auto;
+	width: 1280px;	
+	}
+
+	
+}
+
+@media screen and (max-width: 600px) {
+	body{
+	margin: 0 auto;
+	width: 600px;	
+	}
+	.adjthumb{
+	display:inline-block;
+	padding: 10px 0;
+	width:160px;
+	text-align:center;
+	}
+	
+
+	.ralign{
+		display:inline-block;
+		text-align:left;
+		width:200px;
+	}
+	
+	.ralign2{
+		display:inline-block;
+		text-align:left;
+		width:360px;
+	}
+	
+}
+
+@media screen and (max-width: 320px) {
+	body{
+	margin: 0 auto;
+	width: 320px;	
+	}
+	.adjthumb{
+	display:inline-block;
+	padding: 10px 0;
+	width:100px;
+	text-align:left;
+	}
+	
+
+	.ralign{
+		display:inline-block;
+		text-align:left;
+		width:200px;
+	}
+	
+	.ralign2{
+		display:inline-block;
+		text-align:left;
+		width:320px;
+	}
+	
+}
