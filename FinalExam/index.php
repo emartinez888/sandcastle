@@ -2,5 +2,15 @@
 
 require 'model/database.php';
 
+
+
 ?>
-<html><body><h1>Hello World!</h1></body></html>
+<head>
+		<!-- CSS link -->
+	<link rel="stylesheet" type="text/css" href="./css/main.css" />
+</head>
+<html>
+<body>
+	<?php include 'views/list.php'; ?>
+</body>
+</html>
