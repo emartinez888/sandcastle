@@ -2,7 +2,10 @@
 
 require 'model/database.php';
 
-
+if(isset($_GET['action'])){
+	// we're clicking on link to update job posting
+	include 'views/update.php';
+}
 
 ?>
 <head>
@@ -11,6 +14,10 @@ require 'model/database.php';
 </head>
 <html>
 <body>
-	<?php include 'views/list.php'; ?>
+	<form action="." method="post">
+		<?php include 'views/list.php'; ?>
+		<input type="submit" name="action" value="Update Next Action" />
+	</form>
+	
 </body>
 </html>
