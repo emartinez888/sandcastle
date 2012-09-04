@@ -123,6 +123,7 @@ else{
 	<title>Silent Auction</title>
 </head>
 <body>
+	<a href="views/art.php" />Add Art</a>
 	<div id="intro">
 		<?php include 'views/intro.php'; ?>
 	</div>

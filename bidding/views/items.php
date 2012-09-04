@@ -60,7 +60,7 @@ for($i=0;$i<count($master);$i++){
 
 	array_multisort($picsrnk[$i],$picsfile[$i]);
 	$img=$picsfile[$i][0];
-	$img="<a href='#'><img src='./images/$img' width=100 height=162 title='Click to enlarge' /></a>";
+	$img="<a href='#'><img src='./images/$img' draggable='true' width=100 height=162 title='Click to enlarge' /></a>";
 	
 	array_multisort($bidsbid[$i],SORT_DESC,$bidsts[$i],SORT_ASC,$bidsuser[$i],$bidsid[$i]);
 	
