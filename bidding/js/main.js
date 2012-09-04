@@ -15,54 +15,54 @@ var $t=function(tag){
 function init(){
 	// both submit buttons are named "verify" must loop to assign the proper onclick event
 	var arr = new Array();
-	arr=document.getElementsByName("verify");
+	arr=$n("verify");
 	for(var i = 0; i < arr.length; i++)
     {
         var obj = arr.item(i);
 
         if(obj.value=="Sign In"){
-        	document.getElementById("signacct").onclick=verifyAcct;// existing account
+        	$i("signacct").onclick=verifyAcct;// existing account
         }
         else if(obj.value=="Create Account"){
-        	document.getElementById("veracct").onclick=verifyNewAcct;// new account
-        	(document.getElementsByName("usersignin"))[0].onblur=verifyUsersIds;
+        	$i("veracct").onclick=verifyNewAcct;// new account
+        	($n("usersignin"))[0].onblur=verifyUsersIds;
         }else if(obj.value=="Update Account"){
-        	document.getElementById("veracct").onclick=verifyUpdateAcct;
-        	(document.getElementsByName("usersignin"))[0].onblur=verifyUsersIds;
+        	$i("veracct").onclick=verifyUpdateAcct;
+        	($n("usersignin"))[0].onblur=verifyUsersIds;
         }
     }
 	
-	document.getElementById("addart").onclick=addart;
-	//document.getElementById("addartimages").onclick=addimages;
-	//document.getElementById("addarteditimages").onclick=viewimages;
+	$i("addart").onclick=addart;
+	//$i("addartimages").onclick=addimages;
+	//$i("addarteditimages").onclick=viewimages;
 }
 
 
 function verifyNewAcct(){
-	var tmp=verifySingleLogin(document.getElementById("emailsignin").value);
+	var tmp=verifySingleLogin($i("emailsignin").value);
 	if(!tmp){
-		document.getElementById("error").innerHTML="Wrong User id or first email";
+		$i("error").innerHTML="Wrong User id or first email";
 		return tmp;
 	}
-	tmp=tmp && (document.getElementsByName("emailsignin"))[0].value==(document.getElementsByName("emailsignin2"))[0].value && chkemail((document.getElementsByName("emailsignin2"))[0].value);
+	tmp=tmp && ($n("emailsignin"))[0].value==($n("emailsignin2"))[0].value && chkemail(($n("emailsignin2"))[0].value);
 	if(!tmp){
-		document.getElementById("error").innerHTML="Emails don't match or wrong second email";
+		$i("error").innerHTML="Emails don't match or wrong second email";
 		return tmp;
 	}	
 }
 
 function verifyAcct(){
-		var tmp= verifySingleLogin(document.getElementById("emailsignin").value);
+		var tmp= verifySingleLogin($i("emailsignin").value);
 		if(!tmp){
-			document.getElementById("error").innerHTML="Wrong User id or email";
+			$i("error").innerHTML="Wrong User id or email";
 		}
 		return tmp;		
 }
 
 function verifySingleLogin(email){
-	var name=(document.getElementsByName("usersignin"))[0].value;
+	var name=($n("usersignin"))[0].value;
 	name=name.trim();
-	(document.getElementsByName("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
+	($n("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
 	
 	return (name.length>0) && chkemail(email) && (email.length>0);
 }
@@ -73,23 +73,23 @@ function chkemail(email){
 }
 
 function verifyUsersIds(){
-	document.getElementById("error").innerHTML='';
+	$i("error").innerHTML='';
 	
-	var name=(document.getElementsByName("usersignin"))[0].value;
+	var name=($n("usersignin"))[0].value;
 	name=name.trim();
-	(document.getElementsByName("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
+	($n("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
 	if(name.length==0){
-		document.getElementById("error").innerHTML="No User Id enterred.";
+		$i("error").innerHTML="No User Id enterred.";
 		return;
 	}
-	var tmp=document.getElementById("hide").innerHTML;
+	var tmp=$i("hide").innerHTML;
 	tmp=tmp.split(',');
 	
 	for(var i=0;i<tmp.length;i++){
 		if(name==tmp[i]){
 			// we found an existing user id, test must fail
-			document.getElementById("error").innerHTML="User Id "+name+" already in use";
-			(document.getElementsByName("usersignin"))[0].value='';// clear the field
+			$i("error").innerHTML="User Id "+name+" already in use";
+			($n("usersignin"))[0].value='';// clear the field
 			break;
 		}
 	}
@@ -97,12 +97,12 @@ function verifyUsersIds(){
 
 function verifyUpdateAcct(){
 	// just checks the user id
-	document.getElementById("error").innerHTML='';
-	var name=(document.getElementsByName("usersignin"))[0].value;
+	$i("error").innerHTML='';
+	var name=($n("usersignin"))[0].value;
 	name=name.trim();
-	(document.getElementsByName("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
+	($n("usersignin"))[0].value=name;// sets back the trimmed user id, allow blanks in id
 	if(name.length==0){
-		document.getElementById("error").innerHTML="No User Id enterred.";
+		$i("error").innerHTML="No User Id enterred.";
 	}
 	return (name.length>0);
 }
@@ -165,6 +165,7 @@ function addart(){
 	// need small div with table with 2 columns
 	var divm=document.createElement("div");
 	divm.setAttribute("name", "imagefiles");// could be a bunch of those
+	divm.setAttribute("id","imagefiles-"+$n("imagefiles").length);// set id similar to name should match the view/edit link
 	var lb=document.createElement("label");
 	imgfilecnt++;
 	lb.innerHTML="Image "+imgfilecnt;
@@ -172,7 +173,7 @@ function addart(){
 	inp.setAttribute("type","file");
 	inp.setAttribute("accept","image/gif,image/jpeg,image/png");
 	var tb=document.createElement("table");// reuse var tb
-	var tblname=document.getElementsByTagName("table").length;// set master tables id's as mast-0, mast-1, etc...
+	var tblname=$t("table").length;// set master tables id's as mast-0, mast-1, etc...
 	tblname="mast-"+tblname;
 	tb.setAttribute("id",tblname);
 	var tbody = document.createElement("tbody");
@@ -206,6 +207,8 @@ function addart(){
 	a.setAttribute("name","addarteditimages");// link to view images
 	a.setAttribute("href","#");
 	a.innerHTML="View/ Edit images";
+	a.setAttribute("id","aimagefiles-"+$n("imagefiles").length);// related to its div
+	a.onclick=editimages;
 	td1.appendChild(a);
 	tr.appendChild(td1);
 	tbody.appendChild(tr);
@@ -214,8 +217,14 @@ function addart(){
 	
 	div.appendChild(divm);
 	
+	// create div to hold view/ edit area
+	// append to master DIV and give it an id
+	var divm=document.createElement("div");
+	divm.setAttribute("id", "editimages-"+$n("imagefiles").length);// leave this div blank
+	div.appendChild(divm);
+	
 	// appending DIV to form
-	document.getElementsByTagName("form")[0].appendChild(div);
+	$t("form")[0].appendChild(div);
 	
 }
 
@@ -224,8 +233,8 @@ function addimages(){
 	// find the master tables and insert new row
 	
 	var trgtbl=(this.id.split("~"))[1];
-	//document.getElementsByName("piname")[0].value=trgtbl;
-	var tbles=document.getElementsByTagName("table");
+	//$n("piname")[0].value=trgtbl;
+	var tbles=$t("table");
 	
 	for(var i=0;i<tbles.length;i++){
 		
@@ -243,6 +252,44 @@ function addimages(){
 			
 			var cell2 = row.insertCell(1);
 			cell2.appendChild(inp);
+		}
+	}
+}
+
+function editimages(){
+	// loop through valid file images and populate editimages-xx div
+	// check if the filename is already in the editimages-xx div
+	
+	var trgid=this.id.split("-")[1];// from the anchor's id name
+	var trgdiv=$i("editimages-"+trgid);// the expanding div, receiver
+	trgid="imagefiles-"+trgid;// the div holding the filenames
+	var divs=$n("imagefiles");// gets all divs with name imagefiles
+	
+	for(var i=0;i<divs.length;i++){
+		// looping through all divs and select the ones named imagefiles
+		//document.write(divs[i].id,trgid,divs[i].id==trgid,trgdiv.hasChildNodes());
+		if(divs[i].id==trgid){
+			// found a matching id one
+			// check if filename is already in view/edit images div
+			//document.write(divs[i].getElementsByTagName("input").length);
+			if(!trgdiv.hasChildNodes()){
+				var lb=document.createElement("label");
+				lb.innerHTML=divs[i].getElementsByTagName("input")[0].value;
+				trgdiv.appendChild(lb);
+			}else{
+				var test=true;
+				for(var j=0;j<trgdiv.getElementsByTagName("label").length;j++){
+					if(trgdiv.getElementsByTagName("label")[j].innerHTML==divs[i].getElementsByTagName("input")[0].value){
+						test=false;
+						break;
+					}
+				}
+				if(test){
+					var lb=document.createElement("label");
+					lb.innerHTML=divs[i].getElementsByTagName("input")[0].value;
+					trgdiv.appendChild(lb);
+				}
+			}
 		}
 	}
 }
